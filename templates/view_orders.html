@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Orders</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f7f7f7;
+            background-image: url('/static/4kWallpaper.png'); /* Set the background image */
+            background-size: cover; /* Cover the entire background */
+            overflow-x: hidden;
+        }
+        body::-webkit-scrollbar {
+            display: none;
+        }
+        h1 {
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        .order-container {
+            width: 80%;
+            max-width: 600px; /* Set a max-width to limit the width of orders */
+            margin-bottom: 60px; /* Added margin for space below */
+        }
+        .order {
+            background-color: #f9f9f9;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+        #current-time {
+            background-color: white;
+            padding: 25px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 24px;
+            margin-left: 10%;
+        }
+        .new-order-message {
+            position: fixed;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 10px;
+            background-color: black;
+            color: white;
+            animation: blink 1s linear infinite;
+            opacity: 0;
+            z-index: 999; /* Ensure the message is on top */
+        }
+        @keyframes blink {
+            50% {
+                opacity: 1;
+            }
+        }
+        /* Scrollbar styling */
+        .order-scroll-container {
+            max-height: 300px; /* Set the max height for the scroll */
+            overflow-y: auto; /* Enable vertical scrollbar */
+        }
+    </style>
+</head>
+<body>
+    <div class="order-container">
+        <h1>Current Orders</h1>
+        <!-- Encapsulate the orders list in a div with scrollable content -->
+        <div class="order-scroll-container" id="order-container">
+            <div id="orders-list"></div>
+        </div>
+    </div>
+
+    <div id="current-time"></div> <!-- This is where the current time will be displayed -->
+
+    <!-- Blinking message for new order -->
+    <div class="new-order-message" id="new-order-message">Lofi Cafe</div>
+
+    <script>
+        // Function to fetch and update orders
+        function fetchOrders() {
+            // Make an AJAX request to fetch orders
+            fetch('/fetch_orders')
+                .then(response => response.json())
+                .then(data => {
+                    const ordersList = document.getElementById('orders-list');
+                    ordersList.innerHTML = ''; // Clear previous orders
+
+                    if (data.length > 0) {
+                        data.forEach(order => {
+                            const orderElement = document.createElement('div');
+                            orderElement.classList.add('order');
+                            orderElement.innerHTML = `
+                                <p><strong>Coffee Name:</strong> ${order.coffee_name}</p>
+                                <p><strong>Table Number:</strong> ${order.table_number}</p>
+                            `;
+                            ordersList.appendChild(orderElement);
+                        });
+                        // Display new order message
+                        document.getElementById('new-order-message').style.opacity = 1;
+                        // Start timeout to hide the message after a delay
+                        setTimeout(() => {
+                            document.getElementById('new-order-message').style.opacity = 0;
+                        }, 5000); // Hide message after 5 seconds
+                    } else {
+                        ordersList.innerHTML = '<p>No orders yet.</p>';
+                    }
+                });
+        }
+
+        // Function to update current time
+        function updateCurrentTime() {
+            const currentTimeElement = document.getElementById('current-time');
+            const now = new Date();
+            const currentTimeString = now.toLocaleString();
+            currentTimeElement.textContent = 'Current Time: ' + currentTimeString;
+        }
+
+        // Fetch orders initially
+        fetchOrders();
+
+        // Fetch orders every 5 seconds
+        setInterval(fetchOrders, 5000);
+
+        // Update current time initially
+        updateCurrentTime();
+
+        // Update current time every second
+        setInterval(updateCurrentTime, 1000);
+    </script>
+</body>
+</html>

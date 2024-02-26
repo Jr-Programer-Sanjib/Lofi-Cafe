@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Success</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f7f7f7;
+            background-image: url('/static/4kWallpaper.png'); /* Set the background image */
+            background-size: cover; /* Cover the entire background */
+            
+        }
+        .success-message {
+            background-color: #a623ce75;
+            
+            color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Styles for the GIF container */
+        .gif-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+          
+            border-radius: 10px; /* Border radius */
+            overflow: hidden; /* Ensure the border and border radius are respected */
+        }
+
+        .gif-container img {
+            max-width: 100%; /* Ensure the GIF fits inside the container */
+            border-radius: 8px; /* Border radius for the GIF */
+        }
+
+        /* Blinking effect for h1 tag */
+        @keyframes blink {
+            50% {
+                opacity: 0;
+            }
+        }
+        .blink {
+            animation: blink 1s linear infinite;
+        }
+    </style>
+</head>
+<body>
+    <div class="success-message">
+        <!-- Inserting the provided GIF -->
+        <div class="gif-container">
+            <img src="https://i.pinimg.com/originals/a2/cc/a3/a2cca33b3be15edbc915249747a4a3af.gif" alt="GIF">
+        </div>
+
+        <!-- Blinking h1 tag with thank you message -->
+        <h1 class="blink">Thank you for your order, wish you a great day!</h1>
+    </div>
+</body>
+</html>

@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Place Order</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f7f7f7;
+            background-image: url('/static/4kWallpaper.png'); /* Set the background image */
+            background-size: cover; /* Cover the entire background */
+        }
+
+        body::-webkit-scrollbar {
+            display: none;
+        }
+
+        .order-form-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 10px; /* Adjusted padding for the container */
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .order-form {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px; /* Adjusted padding for the order form */
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+            text-align: center; /* Center the input fields */
+        }
+
+        .input-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .input-group input {
+            width: calc(100% - 22px); /* Adjusted width to fit within the box */
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            text-align: center; /* Center the text within the input fields */
+        }
+
+        /* Image transition */
+        .coffee-image {
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            width: 200px;
+            height: 200px; /* Change the width of the image */
+            height: auto; /* Maintain aspect ratio */
+            border-radius: 10px; /* Add border radius */
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Add shadow */
+            margin-bottom: 10px; /* Adjusted margin for the image */
+        }
+
+        .show {
+            opacity: 1;
+        }
+
+        .gif-container {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            margin: 10px;
+            height: 200px;
+            overflow: hidden;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+        }
+
+        .gif-container img {
+            width: 100%;
+            height: 100%;
+        }
+        footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            
+            text-align: center;
+            padding: 10px 0; /* Add padding top and bottom */
+        }
+
+        /* Icon styles */
+        .footer-icons {
+            margin-top: 10px; /* Add some margin between icons */
+        }
+
+        .footer-icons a {
+            color: #fff;
+            margin: 0 5px; /* Add some margin between icons */
+            font-size: 22px; /* Adjust the icon size as needed */
+            transition: color 0.3s, transform 0.3s; /* Add transition for color and scale */
+        }
+
+        /* Hover effect */
+        .footer-icons a:hover {
+            color: #c70c4b; /* Change color on hover */
+            transform: scale(1.7); /* Scale the icon slightly on hover */
+        }
+        .gif-text {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            padding: 2px;
+            color: white;
+            font-weight: bold;
+            font-size: 12px;
+            background-color: rgba(118, 134, 192, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <div class="order-form-container">
+        <!-- Coffee image -->
+        <div class="mt-5 max-w-sm mx-auto coffee-image-container">
+            <!-- Placeholder image for initial display -->
+            <img src="/static/placeholder.jpg" alt="Coffee" class="coffee-image">
+        </div>
+
+        <div class="order-form"> <!-- Order form -->
+            <form action="/order" method="post" class="w-full flex flex-col items-center">
+                <div class="input-group w-full">
+                    <label for="coffee_name">Coffee Name:</label>
+                    <input type="text" id="coffee_name" name="coffee_name" required>
+                </div>
+                <div class="input-group w-full">
+                    <label for="table_number">Table Number:</label>
+                    <input type="text" id="table_number" name="table_number" required>
+                </div>
+                <div class="input-group flex justify-center w-full">
+                    <button class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-3 rounded-lg shadow-md transition duration-300 transform hover:scale-105">
+                        Place Order
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="gif-container">
+        <img id="gif" src="" alt="GIF">
+        <div class="gif-text">Lofi Cafe </div>
+    </div>
+    <footer>
+        
+        <!-- Font Awesome icons -->
+        <div class="footer-icons">
+            <a href="https://sanjib-m.netlify.app/" target="_blank"><p>@sanjib</p></a>
+            <!-- GitHub icon -->
+            <a href="https://github.com/Jr-Programer-Sanjib" target="_blank"><i class="fab fa-github"></i></a>
+            <!-- LinkedIn icon -->
+            <a href="https://www.linkedin.com/in/sanjib-maity-/" target="_blank"><i class="fab fa-linkedin"></i></a>
+            <!-- Instagram icon -->
+            <a href="https://www.instagram.com/jr_programer_sanjib/" target="_blank"><i class="fab fa-instagram"></i></a>
+        </div>
+    </footer>
+
+
+    <script>
+        // Get input element
+        const coffeeNameInput = document.getElementById('coffee_name');
+    // Get coffee image element
+    const coffeeImage = document.querySelector('.coffee-image');
+
+    // Coffee images object
+    const coffeeImages = {
+        'filter coffee': '/static/black.jpg',
+        'black': '/static/black.jpg',
+        'mocha': '/static/mocha.jpg',
+        'macchiato': '/static/macchiato.jpg',
+        'latte': '/static/latte.jpg',
+        'iced coffee': '/static/IcedCoffee.jpg',
+        'espresso': '/static/espresso.jpg',
+        'cold brew': '/static/cold brew.jpg',
+        'cappuccino': '/static/cappuccino.jpg',
+        'americano': '/static/americano.jpg'
+        // Add more coffee types as needed
+    };
+
+    // Listen for input event
+    coffeeNameInput.addEventListener('input', function() {
+        // Get the entered coffee name and convert it to lowercase
+        const enteredCoffeeName = this.value.toLowerCase();
+
+        // Iterate over the keys in the coffeeImages object
+        for (const coffeeName in coffeeImages) {
+            // Check if the entered coffee name partially matches any key in coffeeImages
+            if (enteredCoffeeName.includes(coffeeName.toLowerCase())) {
+                // Set the image source based on the matched key
+                coffeeImage.src = coffeeImages[coffeeName];
+                // Add 'show' class to display the image with transition
+                coffeeImage.classList.add('show');
+                // Exit the loop once a match is found
+                return;
+            }
+        }
+
+        // If no match is found, reset the image source and remove 'show' class
+        coffeeImage.src = '/static/placeholder.jpg';
+        coffeeImage.classList.remove('show');
+    });
+
+        // GIFs array
+        const gifs = [
+            "https://i.pinimg.com/originals/43/1c/e5/431ce5d15aab86f66a91ec9a07c9114f.gif",
+            "https://i.pinimg.com/originals/c4/0d/b6/c40db678aa354ba91257f6258a1521e1.gif",
+            "https://i.pinimg.com/originals/ab/cb/db/abcbdbac0fe61d14c7fc97bdc3e6cf83.gif",
+            "https://i.pinimg.com/originals/77/5c/ae/775caeb939a88e8d6dbc62b938a9c1ce.gif",
+            "https://i.pinimg.com/originals/ae/99/59/ae9959dae8477e8c7eaef6b7d4201bf5.gif",
+            "https://i.pinimg.com/originals/ab/90/cd/ab90cd665a40678eb76c3b80a2d5a83f.gif",
+            "https://i.pinimg.com/originals/8e/50/d2/8e50d212781cdc16c7efbef5563810ee.gif",
+            "https://i.pinimg.com/originals/0c/7b/7b/0c7b7bd6de1525cecb762d4f3de34ea1.gif",
+            "https://i.pinimg.com/originals/85/df/e6/85dfe641aeafd5a414af1cb3e5d132af.gif",
+            "https://i.pinimg.com/originals/39/69/b4/3969b4033a5a5b2f7204876edae50ff4.gif",
+            "https://i.pinimg.com/originals/09/01/43/0901434384290893f3f67b1065855d60.gif",
+            "https://i.pinimg.com/originals/c4/67/13/c4671376fad5ff9cc8a83c3f2174fd73.gif",
+            "https://i.pinimg.com/originals/39/c4/06/39c40664e3245b04ea8f5c035cbd5c8a.gif",
+            "https://i.pinimg.com/originals/d7/69/0f/d7690fbf3ef44ca72509213ba6b6cd14.gif",
+            "https://i.pinimg.com/originals/18/21/c8/1821c80da847e86af3d1c05b54cf4bd6.gif",
+            "https://i.pinimg.com/originals/96/77/9f/96779f93edc399de0eb9d17a030202be.gif",
+            "https://i.pinimg.com/originals/0e/44/d5/0e44d5a306b10e4a51f9106ffe16794b.gif"
+            // Add more URLs as needed
+        ];
+
+        // Get a random index
+        const randomIndex = Math.floor(Math.random() * gifs.length);
+
+        // Get the source of the GIF image
+        const gifImage = document.getElementById('gif');
+        gifImage.src = gifs[randomIndex];
+    </script>
+
+    
+</body>
+</html>
