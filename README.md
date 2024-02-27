@@ -1,4 +1,4 @@
-# Coffee Order Web App
+# Coffee Order Web App 🍵
 
 This is a simple web application for ordering various types of coffee. You can preview the app [here](https://sanjib19.pythonanywhere.com/).
 
@@ -18,4 +18,4 @@ This is a simple web application for ordering various types of coffee. You can p
 3. Enter the quantity and click on "Order Now".
 4. To view your order, visit [this link](https://sanjib19.pythonanywhere.com/view_orders).
 
-Enjoy your coffee!
+Enjoy your coffee 😊😊!
